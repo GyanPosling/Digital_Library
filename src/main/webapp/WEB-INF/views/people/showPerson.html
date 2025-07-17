@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Person Details</title>
+    <style>
+        .info { margin-bottom: 20px; }
+        .books { margin-top: 20px; }
+        .btn { padding: 6px 10px; margin-right: 5px; text-decoration: none; }
+        .edit-btn { background: #FFC107; color: black; }
+        .delete-btn { background: #F44336; color: white; }
+        .back-btn { background: #9E9E9E; color: white; }
+    </style>
+</head>
+<body>
+<div class="info">
+    <h1>Person Details</h1>
+    <p><strong>Name:</strong> <span th:text="${person.fullName}"></span></p>
+    <p><strong>Birth Year:</strong> <span th:text="${person.birthYear}"></span></p>
+</div>
+
+<div class="actions">
+    <a th:href="@{/people/{id}/edit(id=${person.id})}" class="btn edit-btn">Edit</a>
+    <form th:action="@{/people/{id}(id=${person.id})}" th:method="delete" style="display: inline;">
+        <button type="submit" class="btn delete-btn">Delete</button>
+    </form>
+    <a th:href="@{/people}" class="btn back-btn">Back to List</a>
+</div>
+
+<div class="books" th:if="${books != null and !books.empty}">
+    <h2>Borrowed Books:</h2>
+    <ul>
+        <li th:each="book : ${books}">
+            <a th:href="@{/books/{id}(id=${book.id})}" th:text="${book.title + ' by ' + book.author}"></a>
+        </li>
+    </ul>
+</div>
+
+<div class="books" th:unless="${books != null and !books.empty}">
+    <p>This person hasn't borrowed any books yet.</p>
+</div>
+</body>
+</html>
