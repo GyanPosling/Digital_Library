@@ -24,7 +24,7 @@ import java.util.Objects;
 @Configuration
 @ComponentScan("anton")
 @EnableWebMvc
-@PropertySource("classpath:dataBase.properties")
+@PropertySource("classpath:database.properties")
 public class SpringConfig implements WebMvcConfigurer {
 
     private final ApplicationContext applicationContext;
@@ -68,10 +68,17 @@ public class SpringConfig implements WebMvcConfigurer {
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
+        System.out.println("driver = " + environment.getProperty("driver"));
+        System.out.println("url = " + environment.getProperty("url"));
+        System.out.println("username = " + environment.getProperty("username"));
+        System.out.println("password = " + environment.getProperty("password"));
+
         dataSource.setDriverClassName(Objects.requireNonNull(environment.getProperty("driver")));
         dataSource.setUrl(environment.getProperty("url"));
-        dataSource.setUsername(environment.getProperty("username"));
+        dataSource.setUsername("postgres");
         dataSource.setPassword(environment.getProperty("password"));
+
+
 
         return dataSource;
     }

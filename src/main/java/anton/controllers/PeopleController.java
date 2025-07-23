@@ -40,19 +40,20 @@ public class PeopleController {
     }
 
     @GetMapping("/new")
-    public String newPerson (@ModelAttribute("person") Person person) {
+    public String newPerson(@ModelAttribute("person") Person person) {
         return "people/newPerson";
     }
 
-    @PostMapping("/new")
-    public String createPerson (@ModelAttribute("person")
-                                    @Valid Person person, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
+    @PostMapping()
+    public String create(@ModelAttribute("person") @Valid Person person,
+                         BindingResult bindingResult) {
+        personValidator.validate(person, bindingResult);
+
+        if (bindingResult.hasErrors())
             return "people/newPerson";
-        }
+
         personDAO.save(person);
         return "redirect:/people";
-
     }
 
     @GetMapping("/{id}/edit")

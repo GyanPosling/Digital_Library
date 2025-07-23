@@ -49,17 +49,17 @@ public class BookControllers {
     }
 
     @GetMapping("/new")
-    public String newBook(@ModelAttribute Book book) {
+    public String newBook(@ModelAttribute("book") Book Book) {
         return "books/new";
     }
 
-    @PostMapping("/new")
-    public String createBook(@ModelAttribute @Valid Book book, Model model,
-                             BindingResult bindingResult) {
+    @PostMapping()
+    public String create(@ModelAttribute("book") @Valid Book Book,
+                         BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             return "books/new";
 
-        bookDAO.save(book);
+        bookDAO.save(Book);
         return "redirect:/books";
     }
 

@@ -1,49 +1,20 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Books List</title>
-    <style>
-        table { border-collapse: collapse; width: 100%; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        tr:nth-child(even) { background-color: #f2f2f2; }
-        .btn { padding: 8px 12px; text-decoration: none; }
-        .add-btn { background: #4CAF50; color: white; }
-        .people-btn { background: #2196F3; color: white; }
-    </style>
+    <title>Index</title>
 </head>
 <body>
-<h1>Books List</h1>
 
-<table>
-    <thead>
-    <tr>
-        <th>Title</th>
-        <th>Author</th>
-        <th>Year</th>
-        <th>Status</th>
-        <th>Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="book : ${books}">
-        <td><a th:href="@{/books/{id}(id=${book.id})}" th:text="${book.title}"></a></td>
-        <td th:text="${book.author}"></td>
-        <td th:text="${book.year}"></td>
-        <td th:text="${book.personId != null} ? 'Borrowed' : 'Available'"></td>
-        <td>
-            <a th:href="@{/books/{id}/edit(id=${book.id})}">Edit</a> |
-            <form th:action="@{/books/{id}(id=${book.id})}" th:method="delete" style="display: inline;">
-                <button type="submit">Delete</button>
-            </form>
-        </td>
-    </tr>
-    </tbody>
-</table>
-
-<div style="margin-top: 20px;">
-    <a th:href="@{/books/new}" class="btn add-btn">Add New Book</a>
-    <a th:href="@{/people}" class="btn people-btn" style="margin-left: 10px;">View People</a>
+<div th:each="book : ${books}">
+    <a th:href="@{/books/{id}(id=${book.getId()})}"
+       th:text="${book.getTitle() + ', ' + book.getAuthor() + ', ' + book.getYear()}">book</a>
 </div>
+
+<br/>
+<hr/>
+
+<a href="/books/new">Добавить книгу</a>
+
 </body>
 </html>

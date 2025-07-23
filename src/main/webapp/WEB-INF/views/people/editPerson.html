@@ -1,72 +1,22 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Edit Person</title>
-    <style>
-        .form-container {
-            max-width: 500px;
-            margin: 20px auto;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        input[type="text"],
-        input[type="number"] {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-        .error {
-            color: #dc3545;
-            font-size: 0.9em;
-        }
-        .btn {
-            padding: 8px 15px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .btn-back {
-            display: inline-block;
-            margin-top: 15px;
-            color: #6c757d;
-            text-decoration: none;
-        }
-    </style>
+    <title>Редактировать человека</title>
 </head>
 <body>
-<div class="form-container">
-    <h1>Edit Person</h1>
 
-    <form th:action="@{/people/{id}(id=${person.id})}" th:object="${person}" th:method="patch">
-        <div class="form-group">
-            <label for="fullName">Full Name:</label>
-            <input type="text" id="fullName" th:field="*{fullName}">
-            <span class="error" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}"></span>
-        </div>
+<form th:method="PATCH" th:action="@{/people/{id}(id=${person.getId()})}" th:object="${person}">
+    <label for="fullName">Введите ФИО: </label>
+    <input type="text" th:field="*{name}" id="fullName"/>
+    <div style="color:red" th:if="${#fields.hasErrors('fullName')}" th:errors="*{name}">Full Name Error</div>
+    <br/>
+    <label for="yearOfBirth">Введите год рождения: </label>
+    <input type="text" th:field="*{age}" id="yearOfBirth"/>
+    <div style="color:red" th:if="${#fields.hasErrors('yearOfBirth')}" th:errors="*{age}">Year of birth Error</div>
+    <br/>
+    <input type="submit" value="Редактировать!"/>
+</form>
 
-        <div class="form-group">
-            <label for="birthYear">Birth Year:</label>
-            <input type="number" id="birthYear" th:field="*{birthYear}">
-            <span class="error" th:if="${#fields.hasErrors('birthYear')}" th:errors="*{birthYear}"></span>
-        </div>
-
-        <button type="submit" class="btn">Update</button>
-    </form>
-
-    <a th:href="@{/people}" class="btn-back">← Back to People List</a>
-</div>
 </body>
 </html>

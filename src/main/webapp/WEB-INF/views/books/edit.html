@@ -1,54 +1,26 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Edit Book</title>
-    <style>
-        .form-group { margin-bottom: 15px; }
-        label { display: inline-block; width: 120px; }
-        .error { color: red; }
-        .btn {
-            padding: 8px 12px;
-            background: #2196F3;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        .btn-back {
-            padding: 8px 12px;
-            background: #9E9E9E;
-            color: white;
-            text-decoration: none;
-            display: inline-block;
-            margin-top: 10px;
-        }
-    </style>
+    <title>Update book</title>
 </head>
 <body>
-<h1>Edit Book</h1>
 
-<form th:action="@{/books/{id}(id=${book.id})}" th:object="${book}" th:method="patch">
-    <div class="form-group">
-        <label for="title">Title:</label>
-        <input type="text" id="title" th:field="*{title}">
-        <span class="error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
-    </div>
-
-    <div class="form-group">
-        <label for="author">Author:</label>
-        <input type="text" id="author" th:field="*{author}">
-        <span class="error" th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></span>
-    </div>
-
-    <div class="form-group">
-        <label for="year">Year:</label>
-        <input type="number" id="year" th:field="*{year}">
-        <span class="error" th:if="${#fields.hasErrors('year')}" th:errors="*{year}"></span>
-    </div>
-
-    <button type="submit" class="btn">Update Book</button>
+<form th:method="PATCH" th:action="@{/books/{id}(id=${book.getId()})}" th:object="${book}">
+    <label for="title">Введите название книги: </label>
+    <input type="text" th:field="*{title}" id="title"/>
+    <div style="color:red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Title Error</div>
+    <br/>
+    <label for="author">Введите автора: </label>
+    <input type="text" th:field="*{author}" id="author"/>
+    <div style="color:red" th:if="${#fields.hasErrors('author')}" th:errors="*{author}">Author Error</div>
+    <br/>
+    <label for="year">Введите год: </label>
+    <input type="text" th:field="*{year}" id="year"/>
+    <div style="color:red" th:if="${#fields.hasErrors('year')}" th:errors="*{year}">Year Error</div>
+    <br/>
+    <input type="submit" value="Редактировать!"/>
 </form>
 
-<a th:href="@{/books}" class="btn-back">Back to Books List</a>
 </body>
 </html>
